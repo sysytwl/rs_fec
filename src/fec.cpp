@@ -430,7 +430,7 @@ void ZFE_FEC::fec_encode_block(const fec_t* code, const uint8_t*const*const src,
 
 void ZFE_FEC::fec_decode(const fec_t* code, const uint8_t*const*const inpkts, uint8_t*const*const outpkts, const unsigned*const index, size_t sz) {
   gf* m_dec = (gf*)alloca(code->k * code->k);
-  unsigned char outix=0;
+  //unsigned char outix=0;
   unsigned char row=0;
   unsigned char col=0;
   build_decode_matrix_into_space(code, index, code->k, m_dec);
@@ -438,11 +438,11 @@ void ZFE_FEC::fec_decode(const fec_t* code, const uint8_t*const*const inpkts, ui
   for (row=0; row<code->k; row++) {
     assert ((index[row] >= code->k) || (index[row] == row)); /* If the block whose number is i is present, then it is required to be in the i'th element. */
     if (index[row] >= code->k) {
-      ESP_LOGI("FEC","decoding block %d\n", index[row]);
-      bzero(outpkts[outix], sz);
+      ESP_LOGI("FEC","decoding block %d\n", row);
+      bzero(outpkts[row], sz);
       for (col=0; col < code->k; col++)
-        addmul(outpkts[outix], inpkts[col], m_dec[row * code->k + col], sz);
-      outix++;
+        addmul(outpkts[row], inpkts[col], m_dec[row * code->k + col], sz);
+      //outix++;
     }
   }
 }

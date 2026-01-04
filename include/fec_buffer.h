@@ -56,7 +56,7 @@ public:
    * Checks if the buffer is ready to be processed. k blocks of data means ready.
    */
   inline bool fec_buf_ready(){
-    return !(_block_index < _num_blocks-1);
+   return (_block_index >= _num_blocks);
   };
 
   /**

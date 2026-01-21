@@ -438,7 +438,7 @@ void ZFE_FEC::fec_decode(const fec_t* code, const uint8_t*const*const inpkts, ui
   for (row=0; row<code->k; row++) {
     assert ((index[row] >= code->k) || (index[row] == row)); /* If the block whose number is i is present, then it is required to be in the i'th element. */
     if (index[row] >= code->k) {
-      ESP_LOGI("FEC","decoding block %d\n", row);
+      //ESP_LOGI("FEC","decoding block %d\n", row);
       bzero(outpkts[row], sz);
       for (col=0; col < code->k; col++)
         addmul(outpkts[row], inpkts[col], m_dec[row * code->k + col], sz);
